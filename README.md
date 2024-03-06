@@ -1,3 +1,2 @@
-
-"# Tkinter_SCT" 
-"# Tkinter_SCT" 
+# Tkinter_SCT is primarily made for self usage.
+# Constantly adding new features...
