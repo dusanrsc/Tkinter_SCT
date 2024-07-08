@@ -44,7 +44,7 @@ BUTTON_HEIGHT = 40
 
 # variables section
 # meta data - specific variables
-__version__ = "v1.0"
+__version__ = "v1.1.0"
 __updated__ = "06.03.2024"
 __by__ = "Dusan Rosic"
 
@@ -55,6 +55,7 @@ screenshot_path = "archive\\screenshots\\"
 brightness_value = 100
 contrast_value = 100
 audio_volume = 100
+topmost = False
 
 # initializing screen for rotation
 screen = rotatescreen.get_primary_display()
@@ -91,30 +92,40 @@ def choose_color():
 	color_code = colorchooser.askcolor(title="Choose color")[1]
 	root.config(bg=color_code)
 
+# topmost or z-index setter function
+def set_topmost():
+	global topmost
+	if topmost:
+		topmost = False
+		root.wm_attributes("-topmost", topmost)
+	else:
+		topmost = True
+		root.wm_attributes("-topmost", topmost)
+
 # keyboard events
 # on keyboard press hotkeys
-keyboard.add_hotkey("ctrl+m",  lambda: root.wm_state("iconic")) # minimize program with ctrl+m hotkey
-keyboard.add_hotkey("ctrl+n",  lambda: root.wm_state("normal")) # normalize program with ctrl+n hotkey
+keyboard.add_hotkey("ctrl+m", lambda: root.wm_state("iconic")) 											# minimize program with ctrl+m hotkey
+keyboard.add_hotkey("ctrl+n", lambda: root.wm_state("normal")) 											# normalize program with ctrl+n hotkey
 
-keyboard.add_hotkey("ctrl+e",  lambda: root.geometry(f"{WINDOW_WIDTH}x{WINDOW_HEIGHT}")) # quit program with ctrl+q hotkey
-keyboard.add_hotkey("ctrl+c",  lambda: root.geometry(f"{WINDOW_WIDTH}x{WINDOW_HEIGHT_EXPANDED}")) # quit program with ctrl+q hotkey
-keyboard.add_hotkey("ctrl+alt+q",  lambda: root.destroy()) # quit program with ctrl+alt+q hotkey
+keyboard.add_hotkey("ctrl+e", lambda: root.geometry(f"{WINDOW_WIDTH}x{WINDOW_HEIGHT}")) 				# quit program with ctrl+q hotkey
+keyboard.add_hotkey("ctrl+c", lambda: root.geometry(f"{WINDOW_WIDTH}x{WINDOW_HEIGHT_EXPANDED}")) 		# quit program with ctrl+q hotkey
+keyboard.add_hotkey("ctrl+z", lambda: set_topmost()) 													# toggle on/off topmost function with hotkey
+keyboard.add_hotkey("ctrl+alt+q",  lambda: root.destroy()) 												# quit program with ctrl+alt+q hotkey
 
-keyboard.add_hotkey("ctrl+alt+s", screenshot_function) # taking screenshot with ctrl+alt+s hotkey
-keyboard.add_hotkey("ctrl+alt+up", lambda: screen.set_landscape()) # landscape with ctrl+alt+up hotkey
-keyboard.add_hotkey("ctrl+alt+down", lambda: screen.set_landscape_flipped()) # landscape flipped with ctrl+alt+down hotkey
-keyboard.add_hotkey("ctrl+alt+left", lambda: screen.set_portrait()) # portrait with ctrl+alt+left hotkey
-keyboard.add_hotkey("ctrl+alt+right", lambda: screen.set_portrait_flipped()) # portrait flipped with ctrl+alt+right hotkey
+keyboard.add_hotkey("ctrl+alt+s", screenshot_function) 													# taking screenshot with ctrl+alt+s hotkey
+keyboard.add_hotkey("ctrl+alt+up", lambda: screen.set_landscape()) 										# landscape with ctrl+alt+up hotkey
+keyboard.add_hotkey("ctrl+alt+down", lambda: screen.set_landscape_flipped()) 							# landscape flipped with ctrl+alt+down hotkey
+keyboard.add_hotkey("ctrl+alt+left", lambda: screen.set_portrait()) 									# portrait with ctrl+alt+left hotkey
+keyboard.add_hotkey("ctrl+alt+right", lambda: screen.set_portrait_flipped()) 							# portrait flipped with ctrl+alt+right hotkey
 
 # creating main app windows
 # main window configurations
 root = Tk()
 root.config(bg=BLUE)
 root.title(f"{TITLE} | {__version__}")
-root.geometry(f"{WINDOW_WIDTH}x{WINDOW_HEIGHT_EXPANDED}")
+root.geometry(f"{WINDOW_WIDTH}x{WINDOW_HEIGHT}")
 root.resizable(False, False)
 root.wm_attributes("-alpha", alpha_value)
-root.wm_attributes("-topmost", False)
 
 # menubar section
 menubar = Menu(root)
@@ -130,6 +141,8 @@ help_menu = Menu(menubar, tearoff=0)
 sub_menu = Menu(help_menu, tearoff=0)
 sub_menu.add_command(label="Expand                      Ctrl+E", command=lambda: root.geometry(f"{WINDOW_WIDTH}x{WINDOW_HEIGHT}"))
 sub_menu.add_command(label="Collapse                    Ctrl+C", command=lambda: root.geometry(f"{WINDOW_WIDTH}x{WINDOW_HEIGHT_EXPANDED}"))
+sub_menu.add_separator()
+sub_menu.add_command(label="Topmost                   Ctrl+Z", command=lambda: set_topmost())
 sub_menu.add_separator()
 sub_menu.add_command(label="Minimize                   Ctrl+M", command=lambda: root.wm_state("iconic"))
 sub_menu.add_command(label="Normalize                 Ctrl+N", command=lambda: root.wm_state("normal"))
@@ -174,6 +187,8 @@ sub_menu3.add_command(label="", foreground=BLACK, background=WHITE, command=lamb
 # add a menu item to the settings menu
 settings_menu.add_command(label="Expand                            Ctrl+E", command=lambda: root.geometry(f"{WINDOW_WIDTH}x{WINDOW_HEIGHT}"))
 settings_menu.add_command(label="Collapse                          Ctrl+C", command=lambda: root.geometry(f"{WINDOW_WIDTH}x{WINDOW_HEIGHT_EXPANDED}"))
+settings_menu.add_separator()
+settings_menu.add_command(label="Topmost                         Ctrl+Z", command=lambda: set_topmost())
 settings_menu.add_separator()
 settings_menu.add_cascade(label="Color", menu=sub_menu3)
 settings_menu.add_separator()
