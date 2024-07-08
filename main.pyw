@@ -45,7 +45,7 @@ BUTTON_HEIGHT = 40
 # variables section
 # meta data - specific variables
 __version__ = "v1.1.0"
-__updated__ = "06.03.2024"
+__updated__ = "07.08.2024"
 __by__ = "Dusan Rosic"
 
 # standard variables
