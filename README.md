@@ -1,6 +1,7 @@
 # Tkinter_SCT is primarily made for self usage.
 # Constantly adding new features...
 
+# SCREENSHOTS:
 ![screenshot1](https://github.com/dusanrsc/Tkinter_SCT/assets/149257819/31e52163-8c32-45a2-a1b8-e19d03e266e4)
 ![screenshot2](https://github.com/dusanrsc/Tkinter_SCT/assets/149257819/e10a6a6b-3d78-447f-938f-5611ecca6fc8)
 ![screenshot3](https://github.com/dusanrsc/Tkinter_SCT/assets/149257819/1c9f619a-c7cc-4363-ac9c-588e911c01e2)
